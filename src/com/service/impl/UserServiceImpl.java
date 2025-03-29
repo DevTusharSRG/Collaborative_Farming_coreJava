@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
+    
     public boolean userRegister(String name, String contact, String email, String address, String password,String typeOfUser) {
         if(userDao.Register(name, contact, email, address, password, typeOfUser)>0){
             return true; 

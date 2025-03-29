@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao{
         this.connection = DBConnection.getConnection();
     }
 
-    @Override
+    
     public Map<String, Object> Login(String contact, String password) {
          String sql = "SELECT user_id, name, type_of_user FROM users WHERE contact = ? AND password = ?";
         
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao{
         return null;
     }
 
-    @Override
+    
     public int Register(String name, String contact, String email, String address, String password, String typeOfUser) {
         
         String sql = "INSERT INTO users (name, contact, email, address, password, type_of_user, create_date) VALUES (?, ?, ?, ?, ?, ?, NOW())";

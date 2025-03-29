@@ -5,10 +5,12 @@ import java.util.Map;
 
 public interface LandownerDao {
 
-    Boolean insertProperty();
+    boolean insertProperty(int farmerId, String village, String taluka, String district, String state, 
+    String typeOfLand, String landImage, String documentImage, double areaAcre, 
+    double leasePrice, double areaGuntha, String status,String createDate);
     List<Map<String,Object>> getAllProperties(int id);
     List<Map<String,Object>> getAllPropertyRequests(int id);
-    Boolean updateRequestForProperty(int agreementid);
-    List<Map<String,Object>> getAllAgreements(int id);
+    boolean updateRequestForProperty(int agreementId);
+    List<Map<String,Object>> getAgreementsByUserAndStatus(int userId, String status);
     
 }
