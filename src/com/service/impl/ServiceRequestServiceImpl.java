@@ -57,8 +57,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 		}
 
 		for (Map<String, Object> service : services) {
-			System.out.println("Service ID: " + service.get("service_id") +
-							   ", Service Name: " + service.get("service_name"));
+			System.out.println("|Service ID: " + service.get("service_id") +
+							   "\t| Service Name: " + service.get("service_name"));
 		}
 	}
 	
