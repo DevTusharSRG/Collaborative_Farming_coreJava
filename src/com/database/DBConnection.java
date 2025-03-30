@@ -5,7 +5,7 @@ import java.sql.*;
 public class DBConnection {
     private static final String URL = "jdbc:postgresql://localhost:5432/colabDB";
     private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "postgres";
+    private static final String PASSWORD = "root";
 
     // Private constructor to prevent object creation
     private DBConnection() {}

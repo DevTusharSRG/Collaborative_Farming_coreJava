@@ -175,7 +175,7 @@ public List<Map<String, Object>> getAllServiceProviders() {
 
 
 	//Get all properties  from the database with respect to the user id
-@Override
+
 public List<Map<String, Object>> getPropertiesById(int userId) {
 
     List<Map<String,Object>> properties=new ArrayList<>();
