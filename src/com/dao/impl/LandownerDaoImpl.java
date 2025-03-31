@@ -108,16 +108,7 @@ public class LandownerDaoImpl implements LandownerDao {
     }
 
     public boolean updateRequestForProperty(int agreementId) {
-        // String sql = "UPDATE property_agreements SET agreement_status = 'Accepted'
-        // WHERE agreement_id = ?";
-        // try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-        // stmt.setInt(1, agreementId);
-        // return stmt.executeUpdate() > 0;
-        // } catch (SQLException e) {
-        // e.printStackTrace();
-        // return false;
-        // }
-
+    
         String fetchPropertyIdSql = "SELECT property_id FROM property_agreements WHERE agreement_id = ?";
         String updateAgreementSql = "UPDATE property_agreements SET agreement_status = 'Accepted' WHERE agreement_id = ?";
         String updatePropertySql = "UPDATE property SET status = 'Not Available' WHERE property_id = ?";
