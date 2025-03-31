@@ -1,6 +1,5 @@
 package com;
 
-import com.dao.impl.PropertyLeasingDaoImpl;
 import com.database.*;
 import com.service.PropertyLeasingService;
 import com.service.impl.PropertyLeasingServiceImpl;
@@ -21,7 +20,7 @@ public class LandLease_Main {
             } else {
                 System.out.println("Failed to connect to the database.");
             }
-            propertyLeasingService = new PropertyLeasingServiceImpl(new PropertyLeasingDaoImpl(connection));
+            propertyLeasingService = new PropertyLeasingServiceImpl();
 
             Scanner scanner = new Scanner(System.in);
 
@@ -96,7 +95,7 @@ public class LandLease_Main {
                         break;
 
                     case 4:
-                        getAgreementDetails("accepted",userId);
+                        getAgreementDetails("Accepted",userId);
                         break;
 
                     case 5:

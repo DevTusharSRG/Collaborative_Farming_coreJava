@@ -1,14 +1,15 @@
 package com.service.impl;
 
 import com.dao.PropertyLeasingDao;
+import com.dao.impl.PropertyLeasingDaoImpl;
 import com.service.PropertyLeasingService;
 import java.util.*;
 
 public class PropertyLeasingServiceImpl implements PropertyLeasingService {
     private PropertyLeasingDao propertyLeasingDao;
 
-    public PropertyLeasingServiceImpl(PropertyLeasingDao propertyLeasingDao) {
-        this.propertyLeasingDao = propertyLeasingDao;
+    public PropertyLeasingServiceImpl() {
+        this.propertyLeasingDao = new PropertyLeasingDaoImpl();
     }
 
     public List<Object> viewAllProperties() {

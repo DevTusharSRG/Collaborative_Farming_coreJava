@@ -84,7 +84,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 }
 
 
-    @Override
+    
     public void getPropertiesById(int userId) {
         List<Map<String, Object>> properties = serviceRequestDao.getPropertiesById(userId);
         if (properties.isEmpty()) {

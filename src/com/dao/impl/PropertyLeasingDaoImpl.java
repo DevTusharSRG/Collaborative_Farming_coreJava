@@ -8,7 +8,7 @@ import java.util.*;
 public class PropertyLeasingDaoImpl implements PropertyLeasingDao {
     private Connection connection;
 
-    public PropertyLeasingDaoImpl(Connection connection) {
+    public PropertyLeasingDaoImpl() {
         this.connection = DBConnection.getConnection();
     }
 

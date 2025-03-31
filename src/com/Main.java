@@ -18,23 +18,23 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-			System.out.println("********************************************************************************");
-			System.out.println("\n1. View Properties");
+            System.out.println("********************************************************************************");
+            System.out.println("\n1. View Properties");
             System.out.println("2. View all Services");
-			System.out.println("3. View Service Provider By Location");
-            System.out.println("4. Request Service");  
-			System.out.println("5. View All Service Requests");
-			System.out.println("6. Exit");
-			System.out.println("\n ********************************************************************************");
+            System.out.println("3. View Service Provider By Location");
+            System.out.println("4. Request Service");
+            System.out.println("5. View All Service Requests");
+            System.out.println("6. Exit");
+            System.out.println("\n ********************************************************************************");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
-				
-				case 1:
+
+                case 1:
                     serviceRequestService.getPropertiesById(userId);
                     break;
-				
+
                 case 2:
                     serviceRequestService.viewAllServices();
                     break;
@@ -53,15 +53,15 @@ public class Main {
                     String village = scanner.nextLine();
 
                     if (!isValidId(serviceId1, "Service ID") || !isValidLocation(state, "State") ||
-                        !isValidLocation(district, "District") || !isValidLocation(taluka, "Taluka") || 
-                        !isValidLocation(village, "Village")) {
+                            !isValidLocation(district, "District") || !isValidLocation(taluka, "Taluka") ||
+                            !isValidLocation(village, "Village")) {
                         break;
                     }
 
                     serviceRequestService.getServiceProviderByLocation(serviceId1, state, district, taluka, village);
                     break;
-					
-				case 4:
+
+                case 4:
                     System.out.print("Enter Service ID: ");
                     int serviceId = scanner.nextInt();
                     System.out.print("Enter Service Provider ID: ");
@@ -75,9 +75,9 @@ public class Main {
                     int duration = scanner.nextInt();
 
                     // Validate inputs
-                    if (!isValidId(serviceId, "Service ID") || !isValidId(serviceProviderId, "Service Provider ID") || 
-                        !isValidId(propertyId, "Property ID") || !isValidDate(startDate) || 
-                        !isValidDuration(duration)) {
+                    if (!isValidId(serviceId, "Service ID") || !isValidId(serviceProviderId, "Service Provider ID") ||
+                            !isValidId(propertyId, "Property ID") || !isValidDate(startDate) ||
+                            !isValidDuration(duration)) {
                         break;
                     }
 
@@ -106,7 +106,8 @@ public class Main {
                     System.out.println("Cost: " + cost);
 
                     // Call the service method if all inputs are valid
-                    boolean success = serviceRequestService.requestService(userId, serviceId, serviceProviderId, propertyId, startDate, formattedEndDate, duration, cost);
+                    boolean success = serviceRequestService.requestService(userId, serviceId, serviceProviderId,
+                            propertyId, startDate, formattedEndDate, duration, cost);
                     if (success) {
                         System.out.println("Service request submitted successfully.");
                     } else {
@@ -114,16 +115,15 @@ public class Main {
                     }
                     break;
 
-					
-				case 5:
+                case 5:
                     serviceRequestService.viewServiceRequests(userId);
                     break;
 
-				case 6:
+                case 6:
                     System.out.println("Exiting...");
                     scanner.close();
                     System.exit(0);
-					
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
