@@ -2,11 +2,13 @@ package com;
 
 import com.service.GovernmentSchemeService;
 import com.service.LandownerService;
+import com.service.PaymentService;
 import com.service.PropertyLeasingService;
 import com.service.ServiceProviderService;
 import com.service.UserService;
 import com.service.impl.GovernmentSchemeServiceImpl;
 import com.service.impl.LandownerServiceImpl;
+import com.service.impl.PaymentServiceImpl;
 import com.service.impl.PropertyLeasingServiceImpl;
 import com.service.impl.ServiceProviderServiceImpl;
 import com.service.impl.UserServiceImpl;
@@ -14,7 +16,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Main1 {
+public class Main1_Payment {
 
     static PropertyLeasingService propertyLeasingService = new PropertyLeasingServiceImpl();
     private static final AtomicInteger transactionCounter = new AtomicInteger(1010);
@@ -24,6 +26,7 @@ public class Main1 {
         UserService userService = new UserServiceImpl();
         LandownerService landownerService = new LandownerServiceImpl();
         GovernmentSchemeService schemeService = new GovernmentSchemeServiceImpl();
+        PaymentService paymentService = new PaymentServiceImpl();
         ServiceProviderService serviceProviderService = new ServiceProviderServiceImpl();
 
         int loggedInUserId = -1;
@@ -82,7 +85,7 @@ public class Main1 {
                         userType = (user.get("type_of_user") != null) ? user.get("type_of_user").toString() : "";
 
                         if (loggedInUserId > 0) {
-                            mainMenu(scanner, userType, loggedInUserId, landownerService, schemeService,
+                            mainMenu(scanner, userType, loggedInUserId, landownerService, schemeService, paymentService,
                                     serviceProviderService);
                         } else {
                             System.out.println("Login failed. Please check your credentials.");
@@ -105,7 +108,7 @@ public class Main1 {
     }
 
     public static void mainMenu(Scanner scanner, String userType, int userId,
-            LandownerService landownerService, GovernmentSchemeService schemeService,
+            LandownerService landownerService, GovernmentSchemeService schemeService, PaymentService paymentService,
             ServiceProviderService serviceProviderService) {
         while (true) {
 
@@ -115,8 +118,8 @@ public class Main1 {
             if (userType.equals("landowner")) {
                 System.out.println("1. Manage Properties");
                 System.out.println("2. Government Schemes");
-
-                System.out.println("3. Logout");
+                System.out.println("3. Payments");
+                System.out.println("4. Logout");
                 System.out.print("Enter your choice: ");
                 int choice1 = scanner.nextInt();
                 scanner.nextLine();
@@ -128,6 +131,9 @@ public class Main1 {
                         governmentSchemeMenu(scanner, schemeService, userId);
                         break;
                     case 3:
+                        landownerPaymentMenu(scanner, paymentService, userId);
+                        break;
+                    case 4:
                         System.out.println("Logging out...");
                         return;
                     default:
@@ -137,7 +143,8 @@ public class Main1 {
             } else if (userType.equals("farmer")) {
                 System.out.println("1. Property Lease");
                 System.out.println("2. Government Schemes");
-                System.out.println("3. Logout");
+                System.out.println("3. Payment");
+                System.out.println("4. Logout");
                 System.out.print("Enter your choice: ");
                 int choice1 = scanner.nextInt();
                 scanner.nextLine();
@@ -150,8 +157,11 @@ public class Main1 {
                     case 2:
                         governmentSchemeMenu(scanner, schemeService, userId);
                         break;
-
                     case 3:
+                        farmerPaymentMenu(scanner, paymentService, userId);
+                        break;
+
+                    case 4:
                         System.out.println("Logging out...");
                         return;
 
@@ -161,7 +171,8 @@ public class Main1 {
             } else if (userType.equals("service_provider")) {
                 System.out.println("1. Manage Services");
                 System.out.println("2. Government Schemes");
-                System.out.println("3. Logout");
+                System.out.println("3. Payments");
+                System.out.println("4. Logout");
                 System.out.print("Enter your choice: ");
                 int choice1 = scanner.nextInt();
                 scanner.nextLine();
@@ -169,12 +180,17 @@ public class Main1 {
                     case 1:
                         serviceProviderMenu(scanner, serviceProviderService, userId);
                         break;
+
                     case 2:
                         governmentSchemeMenu(scanner, schemeService, userId);
                         break;
                     case 3:
+                        serviceProviderPaymentMenu(scanner, paymentService, userId);
+                        break;
+                    case 4:
                         System.out.println("Logging out...");
                         return;
+
                     default:
                         System.out.println("Invalid choice! Try again.");
                 }
@@ -317,14 +333,7 @@ public class Main1 {
                 case 3:
                     System.out.print("Enter Application Status: ");
                     String status = scanner.next();
-                    List<Map<String, Object>> viewApp = schemeService.viewApplicationsByStatus(status);
-                    if (viewApp.isEmpty()) {
-                        System.out.println("No schemes available.");
-                    } else {
-                        for (Map<String, Object> scheme : viewApp) {
-                            System.out.println("ID: " + scheme.get("scheme_id") + ", registration Date: " + scheme.get("register_date")+", Application Status: " + scheme.get("status"));
-                        }
-                    }
+                    schemeService.viewApplicationsByStatus(status);
                     break;
 
                 case 4:
@@ -347,7 +356,7 @@ public class Main1 {
             System.out.println("4. Accept Agreement");
             System.out.println("5. View ongoing agreements");
             System.out.println("6. View completed Agreements");
-            System.out.println("7. Exit");
+            System.out.println("7. Back to Main Menu");
             System.out.println(
                     "\n************************************************************************************\n");
 
@@ -421,7 +430,7 @@ public class Main1 {
                     break;
 
                 case 7:
-                    System.out.println("Thank You......!");
+                    //System.out.println("Thank You......!");
                     return;
 
                 default:
@@ -453,7 +462,7 @@ public class Main1 {
                     break;
 
                 case 2:
-                    List<String> allowedServiceTypes = Arrays.asList("Equipment", "Testing", "Labour", "Development");
+                List<String> allowedServiceTypes = Arrays.asList("Equipment", "Testing", "Labour", "Development");
                     String serviceType;
 
                     while (true) {
@@ -487,7 +496,7 @@ public class Main1 {
                     String state = scanner.nextLine();
                     System.out.print("Enter Description: ");
                     String description = scanner.nextLine();
-
+                    
                     // System.out.print("Enter Creation Date (YYYY-MM-DD): ");
                     LocalDate createDate = LocalDate.now();
 
@@ -543,7 +552,7 @@ public class Main1 {
                     serviceProviderService.getAllServicesByStatus(userId, status);
                     break;
                 case 7:
-                    return;
+                    return; 
                 default:
                     System.out.println("Invalid choice. Please try again.");
 
@@ -567,6 +576,152 @@ public class Main1 {
         } else {
             agreements.forEach(System.out::println);
         }
+    }
+
+    private static String generateTransactionId() {
+        int nextId = transactionCounter.incrementAndGet();
+        return "TXN" + nextId;
+    }
+
+    public static void landownerPaymentMenu(Scanner scanner, PaymentService paymentService, int user_id) {
+        while (true) {
+            System.out.println("********************************************************************************");
+            System.out.println("\n1. View Payments");
+            System.out.println("2. Back to Main Menu");
+            System.out.println("\n********************************************************************************");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    paymentService.getAllPaymentsForLandowner(user_id);
+                    break;
+
+                case 2:
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+    }
+
+    public static void farmerPaymentMenu(Scanner scanner, PaymentService paymentService, int user_id) {
+        while (true) {
+            System.out.println("********************************************************************************");
+            System.out.println("\n1. Do Payment");
+            System.out.println("2. View Payments ");
+            System.out.println("3. Back to Main Menu");
+            System.out.println("\n********************************************************************************");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+
+                case 1:
+
+                    List<String> allowedAgreementTypes = Arrays.asList("Property", "Service");
+                    String agreementType;
+                    while (true) {
+                        System.out.print("Enter Agreement Type (Property/Service): ");
+                        agreementType = scanner.nextLine();
+                        if (allowedAgreementTypes.contains(agreementType)) {
+                            break;
+                        } else {
+                            System.out.println("Invalid agreement type! Please enter either 'Property' or 'Service'.");
+                        }
+                    }
+                    System.out.print("Enter Agreement ID: ");
+                    int agreementId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    List<String> allowedPaymentMethods = Arrays.asList("UPI", "Credit Card", "Debit Card",
+                            "Net Banking");
+                    String paymentMethod;
+                    while (true) {
+                        System.out.print("Enter Payment Method (UPI, Credit Card, Debit Card, Net Banking): ");
+                        paymentMethod = scanner.nextLine();
+                        if (allowedPaymentMethods.contains(paymentMethod)) {
+                            break;
+                        } else {
+                            System.out.println("Invalid payment method! Please enter a valid option.");
+                        }
+                    }
+                    // System.out.print("Enter Payment Mode (Online/Offline): ");
+                    String paymentMode = "Online";
+
+                    // System.out.print("Enter Payment Status (Paid/Pending/Failed): ");
+                    String paymentStatus = "Paid";
+
+                    String transactionId = generateTransactionId();
+
+                    LocalDate receivedDate = LocalDate.now();
+
+                    if (paymentService.updatePayment(agreementType, agreementId, paymentMethod, paymentMode,
+                            paymentStatus, transactionId, receivedDate.toString())) {
+                        System.out.println("\nPayment Inserted Successfully:");
+                        System.out.println("Agreement Type: " + agreementType);
+                        System.out.println("Agreement ID: " + agreementId);
+                        System.out.println("Payment Mode: " + paymentMode);
+                        System.out.println("Payment Method: " + paymentMethod);
+                        System.out.println("Payment Status: " + paymentStatus);
+                        System.out.println("Transaction ID: " + transactionId);
+                    } else {
+                        System.out.println("Invalid Details");
+                    }
+                    break;
+                case 2:
+                    List<String> allTypes = Arrays.asList("Property", "Service", "All");
+                    String Type;
+                    while (true) {
+                        System.out.print("Enter Agreement Type (Property/Service/All): ");
+                        Type = scanner.nextLine();
+                        if (allTypes.contains(Type)) {
+                            break;
+                        } else {
+                            System.out.println("Invalid agreement type! Please enter either Property/Service/All.");
+                        }
+                    }
+                    paymentService.getAllPaymentsForFarmer(user_id, Type);
+                    break;
+                case 3:
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+    }
+
+    public static void serviceProviderPaymentMenu(Scanner scanner, PaymentService paymentService, int user_id) {
+        while (true) {
+            System.out.println("********************************************************************************");
+            System.out.println("\n1. View Payments");
+            System.out.println("2. Back to Main Menu");
+            System.out.println("\n********************************************************************************");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    paymentService.getAllPaymentsForServiceProvider(user_id);
+                    break;
+
+                case 2:
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
     }
 
 }

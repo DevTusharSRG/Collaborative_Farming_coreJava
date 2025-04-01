@@ -1,5 +1,7 @@
 package com.dao.impl;
 
+import com.dao.PaymentDao;
+import com.database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.dao.PaymentDao;
-import com.database.DBConnection;
 
 public class PaymentDaoImpl implements PaymentDao {
 
@@ -65,7 +64,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 }
 
                 if (agreementIds.isEmpty()) {
-                    System.out.println("No Agreement found.");
+                    //System.out.println("No Agreement found.");
                     return paymentList;
                 }
 
@@ -104,7 +103,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 }
 
                 if (agreementIds.isEmpty()) {
-                    System.out.println("No Service Agreement found.");
+                    //System.out.println("No Service Agreement found.");
                     return paymentList;
                 }
 
@@ -161,7 +160,7 @@ public class PaymentDaoImpl implements PaymentDao {
                     }
             
                     if (agreementIds.isEmpty() && propertyAgreementIds.isEmpty()) {
-                        System.out.println("No Agreements found.");
+                        //System.out.println("No Agreements found.");
                         return paymentList;
                     }
             
@@ -230,7 +229,7 @@ public class PaymentDaoImpl implements PaymentDao {
             }
 
             if (agreementIds.isEmpty()) {
-                System.out.println("No Service Agreement found.");
+                //System.out.println("No Service Agreement found.");
                 return paymentList;
             }
 
@@ -274,7 +273,7 @@ public class PaymentDaoImpl implements PaymentDao {
             }
 
             if (agreementIds.isEmpty()) {
-                System.out.println("No Service Agreement found.");
+                //System.out.println("No Service Agreement found.");
                 return paymentList;
             }
 

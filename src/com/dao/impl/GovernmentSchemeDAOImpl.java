@@ -24,7 +24,7 @@ public class GovernmentSchemeDAOImpl implements GovernmentSchemeDAO {
 
     @Override
     public void insertApplication(int farmerId, int schemeId) {
-        String query = "INSERT INTO government_scheme_application (farmer_id, scheme_id, status, applied_date) VALUES (?, ?, 'Pending', CURRENT_DATE)";
+        String query = "INSERT INTO government_scheme_application (farmer_id, scheme_id, status, register_date) VALUES (?, ?, 'Pending', CURRENT_DATE)";
         try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, farmerId);
             pst.setInt(2, schemeId);
@@ -75,6 +75,7 @@ public class GovernmentSchemeDAOImpl implements GovernmentSchemeDAO {
         }
     
         System.out.println("Total Applications Found: " + applications.size());
+        //System.out.println("Total Applications Found: /n" + applications);
         return applications;
     }
     

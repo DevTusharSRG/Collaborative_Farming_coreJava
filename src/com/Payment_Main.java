@@ -1,12 +1,11 @@
 package com;
 
+import com.service.impl.PaymentServiceImpl;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.service.impl.PaymentServiceImpl;
 
 public class Payment_Main {
     private static final AtomicInteger transactionCounter = new AtomicInteger(1010);
